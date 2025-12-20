@@ -15,30 +15,37 @@ export interface EmployeeDto {
   joinedDate: string;
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
 @Injectable()
 export class MetaService {
   constructor(@Inject(SUPABASE_CLIENT) private readonly supabase: SupabaseClient) {}
 
-  async getEmployees(limit: number): Promise<{ count: number; rows: EmployeeDto[] }> {
+  async getEmployees(page: number, pageSize: number): Promise<PaginatedResponse<EmployeeDto>> {
+    const offset = (page - 1) * pageSize;
+
     const { data, error, count } = await this.supabase
       .from('employees')
-      .select('*', { count: 'exact' })
-      .limit(limit);
+      .select('id, employee_id, full_name, department, chuc_vu, phone_number, is_active, created_at', { count: 'exact' })
+      .range(offset, offset + pageSize - 1)
+      .order('id', { ascending: true });
+
     if (error) {
       throw new Error(error.message);
     }
 
+    const total = count ?? 0;
     const transformedData: EmployeeDto[] = (data ?? []).map((emp: any) => {
       const fullName = (emp.full_name || '').trim();
-      const nameParts = fullName.split(' ').filter(part => part.length > 0);
-
-      let firstName = '';
-      let lastName = '';
-
-      if (nameParts.length > 0) {
-        firstName = nameParts[nameParts.length - 1];
-        lastName = nameParts.slice(0, -1).join(' ');
-      }
+      const nameParts = fullName.split(' ').filter((part: string) => part.length > 0);
+      const firstName = nameParts.length > 0 ? nameParts[nameParts.length - 1] : fullName;
+      const lastName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : '';
 
       return {
         id: emp.id,
@@ -53,6 +60,12 @@ export class MetaService {
       };
     });
 
-    return { count: count ?? 0, rows: transformedData };
+    return {
+      data: transformedData,
+      total,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total / pageSize),
+    };
   }
 }
