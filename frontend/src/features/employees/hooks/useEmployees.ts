@@ -12,7 +12,12 @@ export const useEmployees = () => {
     setError(null);
     try {
       const data = await getEmployees(100);
-      setEmployees(data.rows);
+      console.debug('Fetched employees payload', {
+        total: data.total,
+        page: data.page,
+        count: data.data.length,
+      });
+      setEmployees(data.data);
     } catch (err) {
       setError('Error loading employees');
       console.error('Error loading employees:', err);
