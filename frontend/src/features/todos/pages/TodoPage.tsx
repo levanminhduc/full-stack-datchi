@@ -1,16 +1,9 @@
-import { Container, Typography, Box, IconButton, CircularProgress } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Container, Typography, Box, CircularProgress } from '@mui/material';
 import { useTodos } from '../hooks';
 import { TodoForm, TodoList } from '../components';
 import type { Todo } from '../types';
 
-interface TodoPageProps {
-  darkMode: boolean;
-  onToggleDarkMode: () => void;
-}
-
-export const TodoPage = ({ darkMode, onToggleDarkMode }: TodoPageProps) => {
+export const TodoPage = () => {
   const { todos, loading, createTodo, updateTodo, deleteTodo } = useTodos();
 
   const handleToggle = async (todo: Todo) => {
@@ -22,14 +15,14 @@ export const TodoPage = ({ darkMode, onToggleDarkMode }: TodoPageProps) => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 6 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h3" component="h1">
-          Todo List
+    <Container maxWidth="md">
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
+          Quản lý công việc
         </Typography>
-        <IconButton onClick={onToggleDarkMode} color="inherit">
-          {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
+        <Typography variant="body1" color="text.secondary">
+          Danh sách các công việc cần thực hiện
+        </Typography>
       </Box>
 
       <TodoForm onSubmit={createTodo} loading={loading} />
