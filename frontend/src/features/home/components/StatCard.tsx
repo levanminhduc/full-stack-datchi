@@ -17,7 +17,12 @@ export const StatCard = ({ title, value, icon, color = 'primary' }: StatCardProp
             <Typography color="text.secondary" variant="body2" gutterBottom>
               {title}
             </Typography>
-            <Typography variant="h4" component="div" fontWeight="bold">
+            <Typography 
+              variant="h4" 
+              component="div" 
+              fontWeight="bold"
+              sx={{ fontSize: { xs: '1.5rem', sm: '2.125rem' } }}
+            >
               {value}
             </Typography>
           </Box>
@@ -26,8 +31,8 @@ export const StatCard = ({ title, value, icon, color = 'primary' }: StatCardProp
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              width: 56,
-              height: 56,
+              width: { xs: 48, sm: 56 },
+              height: { xs: 48, sm: 56 },
               borderRadius: 2,
               bgcolor: `${color}.main`,
               color: `${color}.contrastText`,

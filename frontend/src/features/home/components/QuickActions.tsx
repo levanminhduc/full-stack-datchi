@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Button, Box, Stack } from '@mui/material';
+import { Card, CardContent, Typography, Button, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -12,14 +12,14 @@ export const QuickActions = () => {
     {
       title: 'Quản lý nhân viên',
       description: 'Xem và quản lý danh sách nhân viên',
-      icon: <PeopleIcon fontSize="large" />,
+      icon: <PeopleIcon sx={{ fontSize: { xs: 32, sm: 40 } }} />,
       color: 'primary' as const,
       onClick: () => navigate(ROUTES.EMPLOYEES),
     },
     {
       title: 'Quản lý công việc',
       description: 'Xem và quản lý danh sách công việc',
-      icon: <AssignmentIcon fontSize="large" />,
+      icon: <AssignmentIcon sx={{ fontSize: { xs: 32, sm: 40 } }} />,
       color: 'info' as const,
       onClick: () => navigate(ROUTES.TODOS),
     },
@@ -30,9 +30,9 @@ export const QuickActions = () => {
       <Typography variant="h5" component="h2" fontWeight="bold" gutterBottom sx={{ mb: 3 }}>
         Truy cập nhanh
       </Typography>
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+      <Grid container spacing={3}>
         {actions.map((action) => (
-          <Box key={action.title} sx={{ flex: 1 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={action.title}>
             <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={action.onClick}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
@@ -41,8 +41,8 @@ export const QuickActions = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      width: 64,
-                      height: 64,
+                      width: { xs: 48, sm: 64 },
+                      height: { xs: 48, sm: 64 },
                       borderRadius: 2,
                       bgcolor: `${action.color}.main`,
                       color: `${action.color}.contrastText`,
@@ -70,9 +70,9 @@ export const QuickActions = () => {
                 </Button>
               </CardContent>
             </Card>
-          </Box>
+          </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Box>
   );
 };

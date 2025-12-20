@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Stack } from '@mui/material';
+import { Container, Typography, Box, Grid } from '@mui/material';
 import { StatCard, QuickActions } from '../components';
 import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -16,32 +16,32 @@ export const HomePage = () => {
         </Typography>
       </Box>
 
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} sx={{ mb: 4 }}>
-        <Box sx={{ flex: 1 }}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Tổng nhân viên"
             value="24"
             icon={<PeopleIcon />}
             color="primary"
           />
-        </Box>
-        <Box sx={{ flex: 1 }}>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Công việc"
             value="12"
             icon={<AssignmentIcon />}
             color="info"
           />
-        </Box>
-        <Box sx={{ flex: 1 }}>
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <StatCard
             title="Hoàn thành"
             value="8"
             icon={<CheckCircleIcon />}
             color="success"
           />
-        </Box>
-      </Stack>
+        </Grid>
+      </Grid>
 
       <QuickActions />
     </Container>
